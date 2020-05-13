@@ -1,31 +1,32 @@
-def CountingSort(alist, largest, key):
-    c = [0] * (largest + 1)
+def CountingSort(alist, largest, key):#key - функція визначення розряду сортування
+
+    c = [0] * (largest + 1)#заповнюємо нулями масив підрахунків
     for i in range(len(alist)):
         c[key(alist, i)] = c[key(alist, i)] + 1
 
-    # Find the last index for each element
-    c[0] = c[0] - 1  # to decrement each element for zero-based indexing
+    # додавання індексів, пошук місця
+    c[0] = c[0] - 1  # зменшуємо перший еоемент для початку відліку з нуля
     for i in range(1, largest + 1):
         c[i] = c[i] + c[i - 1]
 
     result = [None] * len(alist)
-    for i in range(len(alist) - 1, -1, -1):
+    for i in range(len(alist) - 1, -1, -1): # заповсення масиу результату з кінця
         result[c[key(alist, i)]] = alist[i]
         c[key(alist, i)] = c[key(alist, i)] - 1
-
     return result
-def RadixSort(alist, base=10):
-    if alist == []:
+
+def RadixSort(unsorted, base=10):# base - система числення
+    if unsorted == []:
         return
-    def key_factory(digit, base):
+    def key_factory(digit, base):#виділення розряду
         def key(alist, index):
             return ((alist[index] // (base ** digit)) % base)
         return key
 
-    largest = max(alist)
-    exp = 0
+    largest = max(unsorted)
+    exp = 0 #номер найсильнішого розряду
     while base ** exp <= largest:
-        alist = CountingSort(alist, base - 1, key_factory(exp, base))
+        sorted_a = CountingSort(unsorted, base - 1, key_factory(exp, base))
         exp = exp + 1
-    return alist
+    return sorted_a
 
