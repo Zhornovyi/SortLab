@@ -1,6 +1,6 @@
-def CountingSort(alist, largest, key):#key - функція визначення розряду сортування
+def CountingSort(alist, largest, key): #key - функція визначення розряду сортування
 
-    c = [0] * (largest + 1)#заповнюємо нулями масив підрахунків
+    c = [0] * (largest + 1) #заповнюємо нулями масив підрахунків
     for i in range(len(alist)):
         c[key(alist, i)] = c[key(alist, i)] + 1
 
